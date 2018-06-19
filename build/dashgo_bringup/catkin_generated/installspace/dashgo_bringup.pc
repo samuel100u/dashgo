@@ -1,0 +1,8 @@
+prefix=/home/pi/Desktop/dashgo/install
+
+Name: dashgo_bringup
+Description: Description of dashgo_bringup
+Version: 0.0.0
+Cflags: -I/home/pi/Desktop/dashgo/install/include
+Libs: -L/home/pi/Desktop/dashgo/install/lib 
+Requires: roscpp rospy std_msgs message_runtime

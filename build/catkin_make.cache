@@ -1,0 +1,2 @@
+dashgo_bringup:dashgo_description:dashgo_nav:ros_beginner_tutorials
+-DCATKIN_DEVEL_PREFIX=/home/pi/Desktop/dashgo/devel -DCMAKE_INSTALL_PREFIX=/home/pi/Desktop/dashgo/install -G Unix Makefiles

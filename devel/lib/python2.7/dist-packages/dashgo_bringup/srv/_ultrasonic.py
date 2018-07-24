@@ -95,13 +95,13 @@ import struct
 
 
 class ultrasonicResponse(genpy.Message):
-  _md5sum = "992ce8a1687cec8c8bd883ec73ca41d1"
+  _md5sum = "563b27884d008b0d2adff54dc1f9e4f5"
   _type = "dashgo_bringup/ultrasonicResponse"
   _has_header = False #flag to mark the presence of a Header object
-  _full_text = """string data
+  _full_text = """int32[] data
 """
   __slots__ = ['data']
-  _slot_types = ['string']
+  _slot_types = ['int32[]']
 
   def __init__(self, *args, **kwds):
     """
@@ -121,9 +121,9 @@ class ultrasonicResponse(genpy.Message):
       super(ultrasonicResponse, self).__init__(*args, **kwds)
       #message fields cannot be None, assign default values for those that are
       if self.data is None:
-        self.data = ''
+        self.data = []
     else:
-      self.data = ''
+      self.data = []
 
   def _get_types(self):
     """
@@ -137,12 +137,10 @@ class ultrasonicResponse(genpy.Message):
     :param buff: buffer, ``StringIO``
     """
     try:
-      _x = self.data
-      length = len(_x)
-      if python3 or type(_x) == unicode:
-        _x = _x.encode('utf-8')
-        length = len(_x)
-      buff.write(struct.pack('<I%ss'%length, length, _x))
+      length = len(self.data)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%si'%length
+      buff.write(struct.pack(pattern, *self.data))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -156,12 +154,10 @@ class ultrasonicResponse(genpy.Message):
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%si'%length
       start = end
-      end += length
-      if python3:
-        self.data = str[start:end].decode('utf-8')
-      else:
-        self.data = str[start:end]
+      end += struct.calcsize(pattern)
+      self.data = struct.unpack(pattern, str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -174,12 +170,10 @@ class ultrasonicResponse(genpy.Message):
     :param numpy: numpy python module
     """
     try:
-      _x = self.data
-      length = len(_x)
-      if python3 or type(_x) == unicode:
-        _x = _x.encode('utf-8')
-        length = len(_x)
-      buff.write(struct.pack('<I%ss'%length, length, _x))
+      length = len(self.data)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%si'%length
+      buff.write(self.data.tostring())
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -194,12 +188,10 @@ class ultrasonicResponse(genpy.Message):
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%si'%length
       start = end
-      end += length
-      if python3:
-        self.data = str[start:end].decode('utf-8')
-      else:
-        self.data = str[start:end]
+      end += struct.calcsize(pattern)
+      self.data = numpy.frombuffer(str[start:end], dtype=numpy.int32, count=length)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -210,6 +202,6 @@ def _get_struct_I():
     return _struct_I
 class ultrasonic(object):
   _type          = 'dashgo_bringup/ultrasonic'
-  _md5sum = '992ce8a1687cec8c8bd883ec73ca41d1'
+  _md5sum = '563b27884d008b0d2adff54dc1f9e4f5'
   _request_class  = ultrasonicRequest
   _response_class = ultrasonicResponse

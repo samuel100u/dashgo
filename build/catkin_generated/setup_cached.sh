@@ -7,6 +7,7 @@
 # new environment variables
 
 # modified environment variables
+export PATH="/opt/ros/kinetic/bin:/home/pi/bin:/home/pi/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+export PKG_CONFIG_PATH="/opt/ros/kinetic/lib/pkgconfig:/opt/ros/kinetic/lib/arm-linux-gnueabihf/pkgconfig"
 export PWD="/home/pi/Desktop/dashgo/build"
-export PYTHONPATH="/home/pi/Desktop/dashgo/devel/lib/python2.7/dist-packages:$PYTHONPATH"
-export ROS_PACKAGE_PATH="/home/pi/Desktop/dashgo/src:/opt/ros/kinetic/share"
+export PYTHONPATH="/opt/ros/kinetic/lib/python2.7/dist-packages"

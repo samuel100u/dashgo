@@ -319,6 +319,7 @@ class Arduino:
     def drive(self, right, left):
         ''' Speeds are given in encoder ticks per PID interval
         '''
+        #print("m %d %d"%(right,left))
         return self.execute_ack('m %d %d' %(right, left))
     
     def drive_m_per_s(self, right, left):
@@ -372,6 +373,7 @@ class BaseController:
         self.base_frame = base_frame
         self.rate = float(rospy.get_param("~base_controller_rate", 10))
         self.timeout = rospy.get_param("~base_controller_timeout", 1.0)
+        
         self.stopped = False
                  
         pid_params = dict()
@@ -446,7 +448,7 @@ class BaseController:
         try:
              u1,u2,u3,u4 = self.arduino.ping()
              print(str(u1)+" "+str(u2)+" "+str(u3)+" "+str(u4))
-             return ultrasonicResponse(str(u1)+" "+str(u2)+" "+str(u3)+" "+str(u4))
+             return ultrasonicResponse(u1,u2,u3,u4)
              #self.ultrasonicPub.publish(str(u1)+" "+str(u2)+" "+str(u3)+" "+str(u4))
         except Exception as e: rospy.logerr(e)
     def setup_pid(self, pid_params):

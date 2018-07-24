@@ -33,7 +33,7 @@ struct ultrasonicResponse_
 
 
 
-   typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _data_type;
+   typedef std::vector<int32_t, typename ContainerAllocator::template rebind<int32_t>::other >  _data_type;
   _data_type data;
 
 
@@ -114,12 +114,12 @@ struct MD5Sum< ::dashgo_bringup::ultrasonicResponse_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "992ce8a1687cec8c8bd883ec73ca41d1";
+    return "563b27884d008b0d2adff54dc1f9e4f5";
   }
 
   static const char* value(const ::dashgo_bringup::ultrasonicResponse_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x992ce8a1687cec8cULL;
-  static const uint64_t static_value2 = 0x8bd883ec73ca41d1ULL;
+  static const uint64_t static_value1 = 0x563b27884d008b0dULL;
+  static const uint64_t static_value2 = 0x2adff54dc1f9e4f5ULL;
 };
 
 template<class ContainerAllocator>
@@ -138,7 +138,7 @@ struct Definition< ::dashgo_bringup::ultrasonicResponse_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "string data\n\
+    return "int32[] data\n\
 ";
   }
 
@@ -176,8 +176,12 @@ struct Printer< ::dashgo_bringup::ultrasonicResponse_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::dashgo_bringup::ultrasonicResponse_<ContainerAllocator>& v)
   {
-    s << indent << "data: ";
-    Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.data);
+    s << indent << "data[]" << std::endl;
+    for (size_t i = 0; i < v.data.size(); ++i)
+    {
+      s << indent << "  data[" << i << "]: ";
+      Printer<int32_t>::stream(s, indent + "  ", v.data[i]);
+    }
   }
 };
 

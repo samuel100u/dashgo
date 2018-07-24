@@ -80,7 +80,7 @@ class ultrasonicResponse {
         this.data = initObj.data
       }
       else {
-        this.data = '';
+        this.data = [];
       }
     }
   }
@@ -88,7 +88,7 @@ class ultrasonicResponse {
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type ultrasonicResponse
     // Serialize message field [data]
-    bufferOffset = _serializer.string(obj.data, buffer, bufferOffset);
+    bufferOffset = _arraySerializer.int32(obj.data, buffer, bufferOffset, null);
     return bufferOffset;
   }
 
@@ -97,13 +97,13 @@ class ultrasonicResponse {
     let len;
     let data = new ultrasonicResponse(null);
     // Deserialize message field [data]
-    data.data = _deserializer.string(buffer, bufferOffset);
+    data.data = _arrayDeserializer.int32(buffer, bufferOffset, null)
     return data;
   }
 
   static getMessageSize(object) {
     let length = 0;
-    length += object.data.length;
+    length += 4 * object.data.length;
     return length + 4;
   }
 
@@ -114,13 +114,13 @@ class ultrasonicResponse {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '992ce8a1687cec8c8bd883ec73ca41d1';
+    return '563b27884d008b0d2adff54dc1f9e4f5';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    string data
+    int32[] data
     
     `;
   }
@@ -135,7 +135,7 @@ class ultrasonicResponse {
       resolved.data = msg.data;
     }
     else {
-      resolved.data = ''
+      resolved.data = []
     }
 
     return resolved;
@@ -145,6 +145,6 @@ class ultrasonicResponse {
 module.exports = {
   Request: ultrasonicRequest,
   Response: ultrasonicResponse,
-  md5sum() { return '992ce8a1687cec8c8bd883ec73ca41d1'; },
+  md5sum() { return '563b27884d008b0d2adff54dc1f9e4f5'; },
   datatype() { return 'dashgo_bringup/ultrasonic'; }
 };

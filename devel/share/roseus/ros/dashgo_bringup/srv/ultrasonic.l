@@ -52,10 +52,10 @@
 (defmethod dashgo_bringup::ultrasonicResponse
   (:init
    (&key
-    ((:data __data) "")
+    ((:data __data) (make-array 0 :initial-element 0 :element-type :integer))
     )
    (send-super :init)
-   (setq _data (string __data))
+   (setq _data __data)
    self)
   (:data
    (&optional __data)
@@ -63,21 +63,29 @@
   (:serialization-length
    ()
    (+
-    ;; string _data
-    4 (length _data)
+    ;; int32[] _data
+    (* 4    (length _data)) 4
     ))
   (:serialize
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
-     ;; string _data
-       (write-long (length _data) s) (princ _data s)
+     ;; int32[] _data
+     (write-long (length _data) s)
+     (dotimes (i (length _data))
+       (write-long (elt _data i) s)
+       )
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
-   ;; string _data
-     (let (n) (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4) (setq _data (subseq buf ptr- (+ ptr- n))) (incf ptr- n))
+   ;; int32[] _data
+   (let (n)
+     (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4)
+     (setq _data (instantiate integer-vector n))
+     (dotimes (i n)
+     (setf (elt _data i) (sys::peek buf ptr- :integer)) (incf ptr- 4)
+     ))
    ;;
    self)
   )
@@ -86,7 +94,7 @@
   :super ros::object
   :slots ())
 
-(setf (get dashgo_bringup::ultrasonic :md5sum-) "992ce8a1687cec8c8bd883ec73ca41d1")
+(setf (get dashgo_bringup::ultrasonic :md5sum-) "563b27884d008b0d2adff54dc1f9e4f5")
 (setf (get dashgo_bringup::ultrasonic :datatype-) "dashgo_bringup/ultrasonic")
 (setf (get dashgo_bringup::ultrasonic :request) dashgo_bringup::ultrasonicRequest)
 (setf (get dashgo_bringup::ultrasonic :response) dashgo_bringup::ultrasonicResponse)
@@ -94,22 +102,22 @@
 (defmethod dashgo_bringup::ultrasonicRequest
   (:response () (instance dashgo_bringup::ultrasonicResponse :init)))
 
-(setf (get dashgo_bringup::ultrasonicRequest :md5sum-) "992ce8a1687cec8c8bd883ec73ca41d1")
+(setf (get dashgo_bringup::ultrasonicRequest :md5sum-) "563b27884d008b0d2adff54dc1f9e4f5")
 (setf (get dashgo_bringup::ultrasonicRequest :datatype-) "dashgo_bringup/ultrasonicRequest")
 (setf (get dashgo_bringup::ultrasonicRequest :definition-)
       "---
-string data
+int32[] data
 ")
 
-(setf (get dashgo_bringup::ultrasonicResponse :md5sum-) "992ce8a1687cec8c8bd883ec73ca41d1")
+(setf (get dashgo_bringup::ultrasonicResponse :md5sum-) "563b27884d008b0d2adff54dc1f9e4f5")
 (setf (get dashgo_bringup::ultrasonicResponse :datatype-) "dashgo_bringup/ultrasonicResponse")
 (setf (get dashgo_bringup::ultrasonicResponse :definition-)
       "---
-string data
+int32[] data
 ")
 
 
 
-(provide :dashgo_bringup/ultrasonic "992ce8a1687cec8c8bd883ec73ca41d1")
+(provide :dashgo_bringup/ultrasonic "563b27884d008b0d2adff54dc1f9e4f5")
 
 

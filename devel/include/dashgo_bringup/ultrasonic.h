@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::dashgo_bringup::ultrasonic > {
   static const char* value()
   {
-    return "992ce8a1687cec8c8bd883ec73ca41d1";
+    return "563b27884d008b0d2adff54dc1f9e4f5";
   }
 
   static const char* value(const ::dashgo_bringup::ultrasonic&) { return value(); }
